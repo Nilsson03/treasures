@@ -1,0 +1,47 @@
+inventories:
+  preview_menu:
+    title: "&8Содержимое сокровищницы"
+    structure:
+      - '. . . . . . . . .'
+      - '. x x x x x x x .'
+      - '. x x x x x x x u'
+      - '. x x x x x x x .'
+      - '. x x x x x x x d'
+      - '. x x x x x x x .'
+    items:
+      default:
+        lore:
+          - ''
+          - '&7Данный предмет может выпасть Вам'
+          - '&7с вероятностью в &f{chance}%'
+  main_menu:
+    title: "&8Сокровищница"
+    structure:
+      - '. . . . . . . . .'
+      - '. . . . k . . p .'
+      - '. . . . . . . . .'
+    items:
+      preview:
+        char: p
+        displayName: "&aСодержимое сокровищницы"
+        lore:
+          - ''
+          - '&7В данном меню Вы можете посмотреть'
+          - '&7весь список возможных наград, которые'
+          - '&7Вы можете получить из этой сокровищницы.'
+          - ''
+          - ' &8- &eПерейти'
+        item:
+          material: "BOOK"
+      default:
+        char: k
+        displayName: "&6Сокровищница {displayName}"
+        lore:
+          - ''
+          - '{lore}'
+          - ''
+          - ' &8- &fУ вас ключей: &e{keys}'
+          - ' &8- &fПрогресс до получения награды:'
+          - '     {progress}'
+          - ''
+          - ' &8- &eОткрыть'
