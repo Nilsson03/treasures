@@ -1,0 +1,11 @@
+.gradle/
+build/
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+*.class
+*.jar
+!gradle-wrapper.jar
+run/

@@ -1,0 +1,5 @@
+name: treasures
+version: ${version}
+main: ru.nilsson03.treasures.TreasuresPlugin
+api-version: '1.16'
+author: nilsson03
