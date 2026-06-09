@@ -1,0 +1,26 @@
+messages:
+  treasure_received_key: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fВы получили &e{amount} &fключей от сокровищницы {treasure}"
+  treasure_taken_key: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fУ вас списано &e{amount} &fключей от сокровищницы {treasure}"
+  treasure_no_reward: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fПохоже, что администрация не настроила награды, сообщите об этом."
+  treasure_already_opening: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fВ данный момент кто-то уже открывает данную сокровищницу, подожди!"
+  treasure_dont_have_keys: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fУ вас нет ключей для сокровищницы &e{treasure}"
+  treasure_reward:
+    - ' &8&l┌ '
+    - ' &8&l│ &fИгрок &a{player} &fоткрыл сокровищницу &a{treasure}'
+    - ' &8&l│ &fи получил из неё &e{item} &7({count})'
+    - ' &8&l└'
+  commands_help:
+    - '&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fПомощь по командам:'
+    - ' &e&l* &fУстановить блок - &e/treasures set-block <UUID сокровищницы> &7(смотрите на блок)'
+    - ' &e&l* &fВыдать ключи - &e/treasures give <игрок> <UUID сокровищницы> <количество>'
+    - ' &e&l* &fПерезагрузить плагин - &e/treasures reload'
+  commands_set_block_usage: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fИспользуйте - &e/treasures set-block <UUID> &7(смотрите на блок)"
+  commands_set_block_block_is_null: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fБлок, на который вы смотрите, не найден"
+  commands_set_block_set: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fЛокация для открытия меню успешно установлена"
+  commands_set_block_already_exists: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fВ данной локации уже установлена сокровищница"
+  commands_give_usage: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fИспользуйте - &e/treasures give <игрок> <UUID> <количество>"
+  commands_give_player_is_null: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fДанный игрок не найден на сервере"
+  commands_give_give: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fВы успешно выдали &e{amount} &fключей игроку {player}"
+  commands_treasure_not_found: "&6&lᴛʀᴇᴀѕᴜʀᴇѕ &8| &fСокровищница с данным UUID не найдена"
+  commands_wrong_value: "&c✘ &fВы ввели неверное значение &e{value}"
+  commands_reload: "&a✔ &fПлагин успешно перезагружен"

@@ -1,0 +1,7 @@
+items:
+  DIAMOND: "&bАлмаз"
+  EMERALD: "&aИзумруд"
+  GOLD_INGOT: "&6Золотой слиток"
+  IRON_INGOT: "&7Железный слиток"
+  PLAYER_HEAD:
+    NAMED: "&fГолова игрока &e%s"

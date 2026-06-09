@@ -10,17 +10,18 @@ repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/groups/public/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    maven("https://jitpack.io")
     mavenLocal()
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
 
-    implementation("ru.nilsson03:database-core:1.0-RELEASE")
-    implementation("ru.nilsson03:InvUI:v1.49")
-    implementation("ru.nilsson03:baselibrary:1.2.8-RELEASE")
+    compileOnly(files("libs/baselibrary-1.2.8-RELEASE.jar"))
+    compileOnly(files("libs/InvUI-v1.49.jar"))
+    compileOnly(files("libs/database-core-1.0-RELEASE.jar"))
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.20")
     implementation("org.jetbrains.exposed:exposed-core:0.44.0")
     implementation("org.jetbrains.exposed:exposed-dao:0.44.0")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.44.0")
@@ -29,6 +30,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.33")
 
     compileOnly("me.clip:placeholderapi:2.12.2")
+    compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.6")
     implementation(kotlin("stdlib"))
 }
 

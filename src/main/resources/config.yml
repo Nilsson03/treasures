@@ -1,0 +1,12 @@
+settings:
+  progress_bar_width: 10
+  progress_bar_yes: "&d"
+  progress_bar_no: "&8"
+  progress_bar_symbol: "∎"
+
+database:
+  host: "localhost"
+  port: 3306
+  database: "treasures"
+  user: "root"
+  password: ""
