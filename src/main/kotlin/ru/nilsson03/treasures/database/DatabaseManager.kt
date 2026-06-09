@@ -13,13 +13,11 @@ class DatabaseManager(private val plugin: TreasuresPlugin) {
 
     fun connect() {
         val config = plugin.config
-        val host = config.getString("database.host") ?: "localhost"
-        val port = config.getInt("database.port", 3306)
-        val dbName = config.getString("database.database") ?: "treasures"
-        val user = config.getString("database.user") ?: "root"
+        val jdbcUrl = config.getString("database.jdbc-url") ?: "jdbc:mysql://localhost:3306/treasures"
+        val username = config.getString("database.username") ?: "root"
         val password = config.getString("database.password") ?: ""
 
-        SharedPoolRegistry.registerPlugin(plugin, "$host:$port", dbName, user, password)
+        SharedPoolRegistry.registerPlugin(plugin, "treasures", jdbcUrl, username, password)
         val pool = SharedPoolRegistry.getPool(plugin)
 
         database = Database.connect(pool.dataSource)
