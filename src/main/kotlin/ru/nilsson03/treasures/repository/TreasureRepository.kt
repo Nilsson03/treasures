@@ -106,6 +106,14 @@ class TreasureRepository(private val plugin: TreasuresPlugin) {
         ConfigurationUtil.save(config, plugin.dataFolder, "treasures.yml")
     }
 
+    fun addTreasure(treasure: Treasure) {
+        treasures.add(treasure)
+    }
+
+    fun removeTreasure(treasure: Treasure) {
+        treasures.remove(treasure)
+    }
+
     fun getTreasureByUuid(uuid: UUID): Treasure? = treasures.find { it.uuid == uuid }
 
     fun getTreasures(): List<Treasure> = treasures

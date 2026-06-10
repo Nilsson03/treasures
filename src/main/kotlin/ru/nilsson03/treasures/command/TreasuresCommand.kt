@@ -13,6 +13,7 @@ import ru.nilsson03.treasures.TreasuresPlugin
 import ru.nilsson03.treasures.block.TreasureBlockManager
 import ru.nilsson03.treasures.file.*
 import ru.nilsson03.treasures.manager.KeyManager
+import ru.nilsson03.treasures.menu.setup.TreasureListMenu
 import ru.nilsson03.treasures.service.TreasureService
 
 class TreasuresCommand(
@@ -37,6 +38,7 @@ class TreasuresCommand(
         when (args[0].uppercase()) {
             "SET-BLOCK" -> handleSetBlock(sender, args)
             "GIVE" -> handleGive(sender, args)
+            "SETTINGS" -> handleSettings(sender)
             "RELOAD" -> handleReload(sender)
             else -> UniversalMessenger.send(sender, MessagesFile.getList("messages.commands_help"))
         }
@@ -160,6 +162,11 @@ class TreasuresCommand(
         )
     }
 
+    private fun handleSettings(sender: CommandSender) {
+        if (sender !is Player) return
+        TreasureListMenu.open(sender)
+    }
+
     private fun handleReload(sender: CommandSender) {
         val plugin = TreasuresPlugin.instance
         plugin.reloadConfig()
@@ -178,7 +185,7 @@ class TreasuresCommand(
 
         return when (args.size) {
             1 ->
-                    listOf("set-block", "give", "reload").filter {
+                    listOf("set-block", "give", "settings", "reload").filter {
                         it.startsWith(args[0], ignoreCase = true)
                     }
             2 ->
