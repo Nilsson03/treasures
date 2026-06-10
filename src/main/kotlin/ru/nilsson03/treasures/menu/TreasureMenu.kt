@@ -5,6 +5,7 @@ import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import ru.nilsson03.library.invui.gui.Gui
 import ru.nilsson03.library.invui.item.ItemProvider
@@ -30,6 +31,7 @@ object TreasureMenu {
             ItemProvider { _ ->
                 val builder = treasure.displayInventoryItem?.clone() ?: ItemStack(Material.CHEST)
                 val meta = builder.itemMeta
+                meta?.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 meta?.setDisplayName(
                     InventoriesFile.getString(
                         "inventories.main_menu.items.default.displayName",
