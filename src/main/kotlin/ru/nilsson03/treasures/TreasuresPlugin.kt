@@ -13,6 +13,7 @@ import ru.nilsson03.treasures.block.TreasureBlockManager
 import ru.nilsson03.treasures.command.TreasuresCommand
 import ru.nilsson03.treasures.database.DatabaseManager
 import ru.nilsson03.treasures.file.Config
+import ru.nilsson03.treasures.listener.ChatInputListener
 import ru.nilsson03.treasures.listener.TreasureListener
 import ru.nilsson03.treasures.manager.KeyManager
 import ru.nilsson03.treasures.repository.TreasureRepository
@@ -80,6 +81,7 @@ class TreasuresPlugin : NPlugin() {
 
         val treasureOpener = TreasureOpener()
         treasureService = TreasureService(this, keyManager, treasureBlockManager, treasureOpener)
+        treasureService.loadHolograms()
 
         getCommand("treasures")?.let { cmd ->
             val command = TreasuresCommand(treasureService, treasureBlockManager, keyManager)
@@ -89,6 +91,8 @@ class TreasuresPlugin : NPlugin() {
 
         Bukkit.getPluginManager()
                 .registerEvents(TreasureListener(treasureBlockManager, treasureService), this)
+        Bukkit.getPluginManager()
+                .registerEvents(ChatInputListener(), this)
 
         ConsoleLogger.success(this, "Плагин загружен за %dms", System.currentTimeMillis() - millis)
     }

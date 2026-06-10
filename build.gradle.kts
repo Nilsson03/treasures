@@ -36,12 +36,12 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(16))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
 kotlin {
-    jvmToolchain(16)
+    jvmToolchain(17)
 }
 
 tasks {
@@ -54,13 +54,16 @@ tasks {
     jar {
         archiveBaseName.set("nvTreasures")
         doLast {
-            val destDir = file("D:/Minecraft Develop/Test plugins/plugins")
-            if (!destDir.exists()) {
-                destDir.mkdirs()
-            }
-            copy {
-                from(archiveFile.get().asFile)
-                into(destDir)
+            val destPath = "D:/Minecraft Develop/Test plugins/plugins"
+            try {
+                val destDir = file(destPath)
+                if (destDir.exists()) {
+                    copy {
+                        from(archiveFile.get().asFile)
+                        into(destDir)
+                    }
+                }
+            } catch (_: Exception) {
             }
         }
     }

@@ -19,7 +19,7 @@ class KeyManager(private val databaseManager: DatabaseManager) {
             ensureUserExists(playerUuid)
             TreasureOpens.select {
                 (TreasureOpens.userId eq playerUuid) and (TreasureOpens.treasureId eq treasure.uuid)
-            }.firstOrNull()?.get(TreasureOpens.count) ?: 0
+            }.firstOrNull()?.get(TreasureOpens.keys) ?: 0
         }
     }
 
@@ -34,13 +34,14 @@ class KeyManager(private val databaseManager: DatabaseManager) {
                 TreasureOpens.update({
                     (TreasureOpens.userId eq playerUuid) and (TreasureOpens.treasureId eq treasure.uuid)
                 }) {
-                    it[count] = existing[count] + amount
+                    it[keys] = existing[keys] + amount
                 }
             } else {
                 TreasureOpens.insert {
                     it[userId] = playerUuid
                     it[treasureId] = treasure.uuid
-                    it[count] = amount
+                    it[keys] = amount
+                    it[count] = 0
                 }
             }
         }
@@ -53,11 +54,11 @@ class KeyManager(private val databaseManager: DatabaseManager) {
                 (TreasureOpens.userId eq playerUuid) and (TreasureOpens.treasureId eq treasure.uuid)
             }.firstOrNull() ?: return@transaction
 
-            val newCount = (existing[TreasureOpens.count] - amount).coerceAtLeast(0)
+            val newKeys = (existing[TreasureOpens.keys] - amount).coerceAtLeast(0)
             TreasureOpens.update({
                 (TreasureOpens.userId eq playerUuid) and (TreasureOpens.treasureId eq treasure.uuid)
             }) {
-                it[count] = newCount
+                it[keys] = newKeys
             }
         }
     }
@@ -67,11 +68,28 @@ class KeyManager(private val databaseManager: DatabaseManager) {
     }
 
     fun useKey(playerUuid: UUID, treasure: Treasure) {
-        takeKeys(playerUuid, treasure, 1)
+        transaction {
+            ensureUserExists(playerUuid)
+            val existing = TreasureOpens.select {
+                (TreasureOpens.userId eq playerUuid) and (TreasureOpens.treasureId eq treasure.uuid)
+            }.firstOrNull() ?: return@transaction
+
+            TreasureOpens.update({
+                (TreasureOpens.userId eq playerUuid) and (TreasureOpens.treasureId eq treasure.uuid)
+            }) {
+                it[keys] = (existing[TreasureOpens.keys] - 1).coerceAtLeast(0)
+                it[count] = existing[TreasureOpens.count] + 1
+            }
+        }
     }
 
     fun getOpenCount(playerUuid: UUID, treasure: Treasure): Int {
-        return getKeys(playerUuid, treasure)
+        return transaction {
+            ensureUserExists(playerUuid)
+            TreasureOpens.select {
+                (TreasureOpens.userId eq playerUuid) and (TreasureOpens.treasureId eq treasure.uuid)
+            }.firstOrNull()?.get(TreasureOpens.count) ?: 0
+        }
     }
 
     private fun ensureUserExists(playerUuid: UUID) {
