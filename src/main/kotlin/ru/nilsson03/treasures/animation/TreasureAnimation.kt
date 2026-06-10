@@ -34,7 +34,7 @@ object TreasureAnimation {
 
         val itemRandomizer = ItemRandomizer()
         treasure.items.forEach { (item, chance) -> itemRandomizer.addItem(item, chance) }
-        val displayItem = itemRandomizer.getRandomItem() ?: return
+        val displayItem = itemRandomizer.getRandomItem() ?: reward.clone()
 
         val item = location.world!!.dropItem(location.clone().add(0.5, 1.0, 0.5), displayItem)
 
@@ -51,7 +51,7 @@ object TreasureAnimation {
                             isFalling = true
                             item.velocity = Vector(0.0, -SPEED, 0.0)
                             item.itemStack = reward
-                        } else if (item.location.y <= location.y && isFalling) {
+                        } else if (item.location.y <= location.y + 1.5 && isFalling) {
                             cancel()
                             object : BukkitRunnable() {
                                         override fun run() {
