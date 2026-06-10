@@ -35,21 +35,33 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(16))
+    }
+}
+
+kotlin {
+    jvmToolchain(16)
 }
 
 tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "16"
+    processResources {
+        filesMatching("plugin.yml") {
+            expand("version" to project.version)
+        }
     }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "16"
-    }
-    shadowJar {
-        archiveClassifier.set("")
-    }
-    build {
-        dependsOn(shadowJar)
+
+    jar {
+        archiveBaseName.set("nvTreasures")
+        doLast {
+            val destDir = file("D:/Minecraft Develop/Test plugins/plugins")
+            if (!destDir.exists()) {
+                destDir.mkdirs()
+            }
+            copy {
+                from(archiveFile.get().asFile)
+                into(destDir)
+            }
+        }
     }
 }

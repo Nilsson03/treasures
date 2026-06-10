@@ -1,13 +1,14 @@
 name: Treasures
-version: '${version}'
+version: "${version}"
 main: ru.nilsson03.treasures.TreasuresPlugin
-api-version: '1.16'
+api-version: "1.16"
 author: nilsson03
 depend:
   - BaseLibrary
   - DecentHolograms
-  - DatabaseCore
+  - Database-core
+  - InvUIPlugin
 commands:
   treasures:
-    description: "Управление сокровищницами"
+    description: "Admin command"
     permission: treasures.admin
