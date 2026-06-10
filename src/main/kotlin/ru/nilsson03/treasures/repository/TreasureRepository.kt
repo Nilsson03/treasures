@@ -1,12 +1,12 @@
 package ru.nilsson03.treasures.repository
 
-import org.bukkit.configuration.file.FileConfiguration
+import java.util.UUID
 import org.bukkit.inventory.ItemStack
 import ru.nilsson03.library.bukkit.util.file.ConfigurationUtil
+import ru.nilsson03.library.bukkit.util.log.ConsoleLogger
 import ru.nilsson03.library.text.api.UniversalTextApi
 import ru.nilsson03.treasures.TreasuresPlugin
 import ru.nilsson03.treasures.model.Treasure
-import java.util.UUID
 
 class TreasureRepository(private val plugin: TreasuresPlugin) {
 
@@ -19,7 +19,12 @@ class TreasureRepository(private val plugin: TreasuresPlugin) {
         val section = config.getConfigurationSection("treasures") ?: return
 
         for (key in section.getKeys(false)) {
-            val uuid = try { UUID.fromString(key) } catch (e: Exception) { continue }
+            val uuid =
+                    try {
+                        UUID.fromString(key)
+                    } catch (e: Exception) {
+                        continue
+                    }
             val path = "treasures.$key"
 
             val displayName = UniversalTextApi.colorize(config.getString("$path.displayName") ?: "")
@@ -33,35 +38,50 @@ class TreasureRepository(private val plugin: TreasuresPlugin) {
             if (itemsSection != null) {
                 for (itemKey in itemsSection.getKeys(false)) {
                     val itemSection = config.getConfigurationSection("$path.items.$itemKey.item")
-                    if (itemSection != null) {
-                        val itemStack = ItemStack.deserialize(itemSection.getValues(true))
-                        val chance = config.getDouble("$path.items.$itemKey.chance")
-                        items[itemStack] = chance
+                    if (itemSection == null) {
+                        ConsoleLogger.warn(plugin, "Missing item section for $path.items.$itemKey")
+                        continue
                     }
+
+                    val itemStack =
+                            try {
+                                ItemStack.deserialize(itemSection.getValues(true))
+                            } catch (e: Exception) {
+                                ConsoleLogger.error(
+                                        plugin,
+                                        "Failed to deserialize item: ${e.message}"
+                                )
+                                null
+                            }
+
+                    if (itemStack == null) continue
+
+                    val chance = config.getDouble("$path.items.$itemKey.chance")
+                    items[itemStack] = chance
                 }
             }
 
             val inventoryItemSection = config.getConfigurationSection("$path.inventoryItem")
-            val inventoryItem = inventoryItemSection?.let { ItemStack.deserialize(it.getValues(true)) }
+            val inventoryItem =
+                    inventoryItemSection?.let { ItemStack.deserialize(it.getValues(true)) }
 
             treasures.add(
-                Treasure(
-                    uuid = uuid,
-                    displayName = displayName,
-                    lore = lore,
-                    items = items,
-                    displayInventoryItem = inventoryItem,
-                    needOpensToReward = needOpensToReward,
-                    rewardCommands = rewardCommands,
-                    hologramLines = hologramLines
-                )
+                    Treasure(
+                            uuid = uuid,
+                            displayName = displayName,
+                            lore = lore,
+                            items = items,
+                            displayInventoryItem = inventoryItem,
+                            needOpensToReward = needOpensToReward,
+                            rewardCommands = rewardCommands,
+                            hologramLines = hologramLines
+                    )
             )
         }
     }
 
     fun save() {
-        val config = ConfigurationUtil.load(plugin, "treasures.yml")
-
+        val config = plugin.treasuresConfig
         config.set("treasures", null)
 
         for (treasure in treasures) {
